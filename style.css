@@ -37,8 +37,8 @@ h1 {
     margin: 5px;
     display: flex;
     flex-wrap: wrap;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    background-color: f5f5f5;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .board>div {
@@ -84,6 +84,18 @@ h1 {
     border-width: 2px 0 0 2px;
 }
 
-.rounds {
+.board>div.playerX {
+    background-color: green;
+}
+
+.board>div.playerO {
+    background-color: blue;
+}
+
+.round {
     padding: 30px;
+}
+
+.players>.active {
+    color: yellowgreen;
 }
