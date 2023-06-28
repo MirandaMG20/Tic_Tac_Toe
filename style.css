@@ -40,6 +40,7 @@ h1 {
     margin: 5px;
     display: flex;
     flex-wrap: wrap;
+    position: relative;
     background-color: f5f5f5;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
@@ -101,4 +102,10 @@ h1 {
 
 .players>.active {
     color: blueviolet;
+}
+
+.winner {
+    z-index: 100;
+    position: fixed;
+
 }
