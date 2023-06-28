@@ -17,6 +17,7 @@ body {
 
 h1 {
     padding: 50px;
+    font-size: 40px;
 }
 
 .container {
@@ -27,6 +28,8 @@ h1 {
 }
 
 .players {
+    font-size: x-large;
+    font-weight: bold;
     display: flex;
     justify-content: space-between;
 }
@@ -84,12 +87,12 @@ h1 {
     border-width: 2px 0 0 2px;
 }
 
-.board>div.playerX {
-    background-color: green;
+.board>div.X {
+    background-color: #98d7a5;
 }
 
-.board>div.playerO {
-    background-color: blue;
+.board>div.O {
+    background-color: #97b3e6;
 }
 
 .round {
@@ -97,5 +100,5 @@ h1 {
 }
 
 .players>.active {
-    color: yellowgreen;
+    color: blueviolet;
 }
