@@ -7,11 +7,11 @@ const players = document.querySelectorAll(".players>div"); // selects all the di
 
 class TicTacToe {
     constructor() {
-        this.rounds = (localStorage.getItem("rounds")) ? localStorage.getItem("rounds") : 1;
-        this.turn = (localStorage.getItem("turn")) ? localStorage.getItem("turn") : 0;
-        TicTacToe.changePlayer(players[this.turn]);
+        this.rounds = (localStorage.getItem("rounds")) ? localStorage.getItem("rounds") : 1; // if the value from localStorage is true, it's assigned to rounds, otherwise it assigned the value of  1
+        this.turn = (localStorage.getItem("turn")) ? localStorage.getItem("turn") : 0; // if the value from localStorage is true, it's assigned to turn, otherwise it assigned the value of  0
+        this.changePlayer(players[this.turn]);
         this.boxClasses = (localStorage.getItem("boxClasses")) ? localStorage.getItem("boxClasses").split(",") : this.getBoxClasses();
-        this.setBoxClasses();
+        this.setBoxClasses(); 
     }
 
     static saveGame() { // method that saves the game state in the local browser storage
@@ -48,7 +48,6 @@ class TicTacToe {
     }
 
     static changePlayer(player) { // switch player
-        debugger;
         this.currentPlayer.className = "";
         if (player) {
             this.currentPlayer = player; // 
@@ -106,3 +105,20 @@ const selectBox = (clickEvent) => {
 boxes.forEach((box) => {
     box.addEventListener("click", selectBox);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
