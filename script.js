@@ -6,31 +6,40 @@ const players = document.querySelectorAll(".players>div"); // selects all the di
 
 
 class TicTacToe {
-    constructor() {
-        this.rounds = (localStorage.getItem("rounds")) ? localStorage.getItem("rounds") : 1; // if the value from localStorage is true, it's assigned to rounds, otherwise it assigned the value of  1
-        this.turn = (localStorage.getItem("turn")) ? localStorage.getItem("turn") : 0; // if the value from localStorage is true, it's assigned to turn, otherwise it assigned the value of  0
-        this.changePlayer(players[this.turn]);
-        this.boxClasses = (localStorage.getItem("boxClasses")) ? localStorage.getItem("boxClasses").split(",") : this.getBoxClasses();
-        this.setBoxClasses(); 
+    static games = [];
+
+    static currentGame() {
+        return TicTacToe.games[TicTacToe.games.length - 1];
     }
 
     static saveGame() { // method that saves the game state in the local browser storage
-        this.boxClasses = this.getBoxClasses();
+        this.boxClasses = TicTacToe.getBoxClasses();
         localStorage.setItem("rounds", this.rounds);
         localStorage.setItem("turn", this.turn);
         localStorage.setItem("boxClasses", this.boxClasses.join(","));
     }
 
     static resetGame() { //
-        this.setBoxClasses(true);
-        this.turn = 0;
-        this.changePlayer(players[this.turn]);
-        this.saveGame();
+        TicTacToe.setBoxClasses(true);
+
+        TicTacToe.currentGame().turn = 0;
+        TicTacToe.changePlayer(players[this.turn]);
+        TicTacToe.saveGame();
     }
 
     static newGame() { //
-        this.rounds = 1;
-        this.resetGame();
+        TicTacToe.games.push(new Game());
+        TicTacToe.resetGame();
+    }
+
+    static getGames() { //
+        let i = 1;
+        const savedGame = localStorage.getItem("TicTacToe-game" + i);
+        while (savedGame) {
+            TicTacToe.games.push(new Game(savedGame)); 
+            i++;
+            savedGame = localStorage.getItem("TicTacToe-game" + i);
+        }
     }
 
     static getBoxClasses() { // gets the class names of the boxes and returns as an array
@@ -48,7 +57,10 @@ class TicTacToe {
     }
 
     static changePlayer(player) { // switch player
-        this.currentPlayer.className = "";
+        if (this.currentPlayer) {
+            this.currentPlayer.className = "";
+        }
+
         if (player) {
             this.currentPlayer = player; // 
         } else {
@@ -57,11 +69,18 @@ class TicTacToe {
         }
 
         this.currentPlayer.className = "active";
-        this.saveGame();
+        TicTacToe.saveGame();
     }
 }
 
-const game = new TicTacToe();
+class Game {
+    constructor(game) {
+        this.round = game ? game.round : 1; // if the value from localStorage is true, it's assigned to rounds, otherwise it assigned the value of  1
+        this.turn = game ? game.turn : 0; // if the value from localStorage is true, it's assigned to turn, otherwise it assigned the value of  0
+        this.currentPlayer = TicTacToe.changePlayer(players[this.turn]);
+        this.boxClasses = game ? game.boxClasses.split(",") : TicTacToe.getBoxClasses();
+    }
+}
 
 const showAlert = (message) => {
     const div = document.createElement('div'); // creates a div in the void/document  
@@ -74,7 +93,7 @@ const showAlert = (message) => {
 
 const evalGame = () => { //
 
-    const match = game.currentPlayer.id + game.currentPlayer.id + game.currentPlayer.id;
+    const match = TicTacToe.currentPlayer.id + TicTacToe.currentPlayer.id + TicTacToe.currentPlayer.id;
 
     if (
         boxes[0].className + boxes[1].className + boxes[2].className == match ||  // 
@@ -86,9 +105,9 @@ const evalGame = () => { //
         boxes[0].className + boxes[4].className + boxes[8].className == match ||
         boxes[2].className + boxes[4].className + boxes[6].className == match
     ) {
-        showAlert(game.currentPlayer.innerHTML + " Winner!")
+        showAlert(TicTacToe.currentPlayer.innerHTML + " Winner!")
     } else {
-        game.changePlayer();
+        TicTacToe.changePlayer();
     }
 }
 
@@ -97,28 +116,13 @@ const selectBox = (clickEvent) => {
     if (selectedBox.className) {  // if selected box already has a class, return 
         return;
     }
-    selectedBox.className = game.currentPlayer.id; // setting the class name of the box to the current player id
+    selectedBox.className = TicTacToe.currentPlayer.id; // setting the class name of the box to the current player id
     evalGame(); // see if the current player won 
-    game.saveGame();
+    TicTacToe.saveGame();
 }
 
 boxes.forEach((box) => {
     box.addEventListener("click", selectBox);
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+TicTacToe.getGames();  //recovers game when reload
