@@ -29,6 +29,10 @@ class TicTacToe {
     }
 
     static nextRound() { //
+        let winner = document.querySelector('.winner');
+        if (winner) {
+            winner.remove();
+        }
         TicTacToe.games.push(new Game());
         TicTacToe.resetGame();
         TicTacToe.round.innerText = TicTacToe.games.length;
@@ -43,10 +47,13 @@ class TicTacToe {
                 i++;
                 savedGame = localStorage.getItem("TicTacToe-game" + i);
             }
-            TicTacToe.round.innerText = TicTacToe.games.length; 
+            if (TicTacToe.length > 3) {
+                TicTacToe.newGame();
+            }
+            TicTacToe.round.innerText = TicTacToe.games.length;
             TicTacToe.setBoxClasses();
             TicTacToe.changePlayer(TicTacToe.players[TicTacToe.currentGame().turn]);
-            TicTacToe.evalGame();
+            TicTacToe.evalGame(true);
         } else {
             TicTacToe.newGame();
         }
@@ -76,10 +83,7 @@ class TicTacToe {
     }
 
     static changePlayer(player) { // switch player
-        if (TicTacToe.currentPlayer) {
-            TicTacToe.currentPlayer.className = "";
-        }
-
+        document.querySelector(".active").className = "";
         if (player) {
             TicTacToe.currentPlayer = player; // 
         } else {
@@ -91,7 +95,7 @@ class TicTacToe {
         TicTacToe.saveGame();
     }
 
-    static evalGame() { //
+    static evalGame(noChangePlayer) { //
 
         const match = TicTacToe.currentPlayer.id + TicTacToe.currentPlayer.id + TicTacToe.currentPlayer.id;
 
@@ -106,24 +110,26 @@ class TicTacToe {
             TicTacToe.boxes[2].className + TicTacToe.boxes[4].className + TicTacToe.boxes[6].className == match
         ) {
             TicTacToe.winner();
-        } else {
+        } else if (!document.querySelector(".board>div:not(.X):not(.O)")) {// Give me a box that don't have X or O
+            TicTacToe.winner(true);
+        } else if (!noChangePlayer) {
             TicTacToe.changePlayer();
         }
     }
 
-    static winner() {
+    static winner(draw) {
+        const message = draw ? "It's a Draw!" : 'Player ' + TicTacToe.currentPlayer.id + ' Wins!';
         const div = document.createElement('div'); // creates a div in the void/document  
         div.className = "winner"; // assigning multiple classes to that div
-        div.innerHTML = '<div><span>Player ' + TicTacToe.currentPlayer.id + ' Wins!</span>';
-        if (TicTacToe.round.innerText >= 3) {  // show the button in the game on the 3rd round
-            div.innerHTML += '<button onclick="TicTacToe.newGame()">New Game</button>';
-        } else {
+        div.innerHTML = '<div><span>' + message + '</span>'
+            + (TicTacToe.round.innerText >= 3 ? '<button onclick="TicTacToe.newGame()">New Game</button>' : "") // show the button in the game on the 3rd round
+            + '</div>';
+        if (TicTacToe.round.innerText < 3) {
             setTimeout(() => {
-                document.querySelector('.winner').remove();
+
                 TicTacToe.nextRound();
-            }, 5000);
+            }, 3000);
         }
-        div.innerHTML += '</div>';
         document.querySelector('body').appendChild(div);
 
     }

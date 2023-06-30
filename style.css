@@ -28,6 +28,7 @@ h1 {
 }
 
 .players {
+    padding-bottom: 30px;
     font-size: x-large;
     font-weight: bold;
     display: flex;
@@ -97,17 +98,49 @@ h1 {
 }
 
 .round {
-    padding: 30px;
+    font-size: 20px;
 }
 
-.players>.active {
-    color: blueviolet;
+#X.active {
+    color: #98d7a5;
+}
+
+#O.active {
+    color: #97b3e6;
 }
 
 .winner {
     z-index: 100;
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100% !important;
     height: 100% !important;
+
+}
+
+.winner>div {
+    width: 200px;
+    height: 200px;
+    margin: 380px auto;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.winner>div>span {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-weight: bolder;
+    font-size: 30px;
+    margin: 20px;
+    padding-top: 65px;
+}
+
+.winner>div>button {
+    border: none;
+    color: #444;
+    background-color: #f5f5f5;
+    font-weight: bolder;
+    font-size: 20px;
+    cursor: pointer;
 }
