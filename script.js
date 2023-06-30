@@ -1,11 +1,7 @@
-
-
-
-
 class TicTacToe {
     static board = document.querySelector(".board"); // selects the class board and assigns it to board
     static boxes = document.querySelectorAll(".board>div"); // selects all the div children of the class board: 9 boxes [div, div, div, div, div, div, div, div, div]: 0 to 8 Index 
-    static round = document.querySelector(".round"); // selects the class round and assigns it to round
+    static round = document.querySelector(".round>span"); // selects the class round and assigns it to round
     static players = document.querySelectorAll(".players>div"); // selects all the div children of the class players
     static games = [];
     static currentPlayer; // equals to null
@@ -23,15 +19,19 @@ class TicTacToe {
         TicTacToe.setBoxClasses(true);
 
         TicTacToe.currentGame().turn = 0;
-        TicTacToe.changePlayer(players[TicTacToe.currentGame().turn]);
+        TicTacToe.changePlayer(TicTacToe.players[TicTacToe.currentGame().turn]);
         TicTacToe.saveGame();
     }
 
     static newGame() { //
         TicTacToe.deleteGames();
+        TicTacToe.nextRound();
+    }
+
+    static nextRound() { //
         TicTacToe.games.push(new Game());
         TicTacToe.resetGame();
-
+        TicTacToe.round.innerText = TicTacToe.games.length;
     }
 
     static getGames() { //
@@ -43,8 +43,9 @@ class TicTacToe {
                 i++;
                 savedGame = localStorage.getItem("TicTacToe-game" + i);
             }
+            TicTacToe.round.innerText = TicTacToe.games.length; 
             TicTacToe.setBoxClasses();
-            TicTacToe.changePlayer(players[TicTacToe.currentGame().turn]);
+            TicTacToe.changePlayer(TicTacToe.players[TicTacToe.currentGame().turn]);
             TicTacToe.evalGame();
         } else {
             TicTacToe.newGame();
@@ -62,7 +63,7 @@ class TicTacToe {
 
     static getBoxClasses() { // gets the class names of the boxes and returns as an array
         const boxClasses = [];
-        boxes.forEach((box) => {
+        TicTacToe.boxes.forEach((box) => {
             boxClasses.push(box.className);
         });
         return boxClasses;
@@ -70,7 +71,7 @@ class TicTacToe {
 
     static setBoxClasses(reset) {
         TicTacToe.currentGame().boxClasses.forEach((className, i) => {
-            boxes[i].className = (reset) ? "" : className;
+            TicTacToe.boxes[i].className = (reset) ? "" : className;
         });
     }
 
@@ -82,8 +83,8 @@ class TicTacToe {
         if (player) {
             TicTacToe.currentPlayer = player; // 
         } else {
-            TicTacToe.currentGame().turn = (TicTacToe.currentPlayer != players[0]) ? 0 : 1;
-            TicTacToe.currentPlayer = players[TicTacToe.currentGame().turn];
+            TicTacToe.currentGame().turn = (TicTacToe.currentPlayer != TicTacToe.players[0]) ? 0 : 1;
+            TicTacToe.currentPlayer = TicTacToe.players[TicTacToe.currentGame().turn];
         }
 
         TicTacToe.currentPlayer.className = "active";
@@ -95,19 +96,36 @@ class TicTacToe {
         const match = TicTacToe.currentPlayer.id + TicTacToe.currentPlayer.id + TicTacToe.currentPlayer.id;
 
         if (
-            boxes[0].className + boxes[1].className + boxes[2].className == match ||  // 
-            boxes[3].className + boxes[4].className + boxes[5].className == match ||
-            boxes[6].className + boxes[7].className + boxes[8].className == match ||
-            boxes[0].className + boxes[3].className + boxes[6].className == match ||
-            boxes[1].className + boxes[4].className + boxes[7].className == match ||
-            boxes[2].className + boxes[5].className + boxes[8].className == match ||
-            boxes[0].className + boxes[4].className + boxes[8].className == match ||
-            boxes[2].className + boxes[4].className + boxes[6].className == match
+            TicTacToe.boxes[0].className + TicTacToe.boxes[1].className + TicTacToe.boxes[2].className == match ||  // 
+            TicTacToe.boxes[3].className + TicTacToe.boxes[4].className + TicTacToe.boxes[5].className == match ||
+            TicTacToe.boxes[6].className + TicTacToe.boxes[7].className + TicTacToe.boxes[8].className == match ||
+            TicTacToe.boxes[0].className + TicTacToe.boxes[3].className + TicTacToe.boxes[6].className == match ||
+            TicTacToe.boxes[1].className + TicTacToe.boxes[4].className + TicTacToe.boxes[7].className == match ||
+            TicTacToe.boxes[2].className + TicTacToe.boxes[5].className + TicTacToe.boxes[8].className == match ||
+            TicTacToe.boxes[0].className + TicTacToe.boxes[4].className + TicTacToe.boxes[8].className == match ||
+            TicTacToe.boxes[2].className + TicTacToe.boxes[4].className + TicTacToe.boxes[6].className == match
         ) {
-            showAlert(TicTacToe.currentPlayer.innerHTML + " Winner!")
+            TicTacToe.winner();
         } else {
             TicTacToe.changePlayer();
         }
+    }
+
+    static winner() {
+        const div = document.createElement('div'); // creates a div in the void/document  
+        div.className = "winner"; // assigning multiple classes to that div
+        div.innerHTML = '<div><span>Player ' + TicTacToe.currentPlayer.id + ' Wins!</span>';
+        if (TicTacToe.round.innerText >= 3) {  // show the button in the game on the 3rd round
+            div.innerHTML += '<button onclick="TicTacToe.newGame()">New Game</button>';
+        } else {
+            setTimeout(() => {
+                document.querySelector('.winner').remove();
+                TicTacToe.nextRound();
+            }, 5000);
+        }
+        div.innerHTML += '</div>';
+        document.querySelector('body').appendChild(div);
+
     }
 
     static selectBox(clickEvent) {
@@ -119,6 +137,8 @@ class TicTacToe {
         TicTacToe.evalGame(); // see if the current player won 
         TicTacToe.saveGame();
     }
+
+
 }
 
 class Game {
@@ -130,17 +150,8 @@ class Game {
     }
 }
 
-const showAlert = (message) => {
-    const div = document.createElement('div'); // creates a div in the void/document  
-    div.className = "alert alert-danger winner"; // assigning multiple classes to that div
-    div.appendChild(document.createTextNode(message)); // create a text element appended to that div
-    board.appendChild(div);
 
-    setTimeout(() => document.querySelector('.alert').remove(), 3000); // Vanish in 3 seconds
-}
-
-
-boxes.forEach((box) => {
+TicTacToe.boxes.forEach((box) => {
     box.addEventListener("click", TicTacToe.selectBox);
 });
 
