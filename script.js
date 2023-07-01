@@ -1,7 +1,7 @@
 
 // TicTacToe class with methods that call on each other 
 class TicTacToe {
-    static board = document.querySelector(".board"); // selects the class board and assigns it to board
+    static board = document.querySelector(".board"); // selects the class board and assigns it to the method board
     static boxes = document.querySelectorAll(".board>div"); // selects all the div children of the class board: 9 boxes [div, div, div, div, div, div, div, div, div]: 0 to 8 Index 
     static round = document.querySelector(".round>span"); // selects the class round and assigns it to round
     static players = document.querySelectorAll(".players>div"); // selects all the div children of the class players
@@ -80,7 +80,7 @@ class TicTacToe {
 
     static setBoxClasses(reset) {
         TicTacToe.currentGame().boxClasses.forEach((className, i) => {
-            TicTacToe.boxes[i].className = (reset) ? "" : className;
+            TicTacToe.boxes[i].className = reset ? "" : className;
         });
     }
 
@@ -120,7 +120,7 @@ class TicTacToe {
     }
 
     static winner(draw) {
-        const message = draw ? "It's a Draw!" : TicTacToe.currentPlayer.id + ' Wins!';
+        const message = draw ? "It's a Draw!" : TicTacToe.currentPlayer.id + " Wins!"; 
         const div = document.createElement('div'); // creates a div in the void/document  
         div.className = "winner"; // assigning multiple classes to that div
         div.innerHTML = '<div><span>' + message + '</span>'
@@ -161,3 +161,4 @@ TicTacToe.boxes.forEach((box) => {
 });
 
 TicTacToe.getGames();  //recovers game when reload
+

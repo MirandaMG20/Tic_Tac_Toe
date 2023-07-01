@@ -50,6 +50,7 @@ h1 {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Layout of the boxes in the board */
 .board>div {
     width: 33.3333%;
     height: 33.3333%;
@@ -61,10 +62,11 @@ h1 {
     cursor: pointer;
 }
 
-.board>div:nth-child(1) {
+.board>div:first-child {
     border-width: 0 2px 2px 0;
 }
 
+/* select the nth(number, word or formula) child of it's parent */
 .board>div:nth-child(2) {
     border-width: 0 2px 2px 2px;
 }
@@ -89,7 +91,7 @@ h1 {
     border-width: 2px 2px 0 2px;
 }
 
-.board>div:nth-child(9) {
+.board>div:last-child {
     border-width: 2px 0 0 2px;
 }
 
@@ -109,12 +111,25 @@ h1 {
     color: #97b3e6;
 }
 
+.board>div.X::after { /* inserts something after the content is selected  */
+    content: "X";
+    font-size: 150px;
+    font-weight: bolder;
+}
+
+.board>div.O::after {
+    content: "O";
+    font-size: 150px;
+    font-weight: bolder;
+}
+
+/* Message alert with the winner */
 .winner {
     z-index: 100;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100% !important; /*   */
+    width: 100% !important; /* used to add more importance to a property */
     height: 100% !important;
 
 }
