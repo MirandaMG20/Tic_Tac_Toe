@@ -28,7 +28,10 @@ This is a Tic-Tac-Toe game using HTML, CSS, and JavaScript. It allows two player
 
 
 ### CSS 
+
 :nth-child [w3schools.com]https://www.w3schools.com/cssref/sel_nth-child.php
+
 ::after [w3schools.com]https://www.w3schools.com/cssref/sel_after.php 
+
 !important [w3schools.com]https://www.w3schools.com/css/css_important.asp
 
