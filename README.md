@@ -35,3 +35,6 @@ This is a Tic-Tac-Toe game using HTML, CSS, and JavaScript. It allows two player
 
 !important [w3schools.com]https://www.w3schools.com/css/css_important.asp
 
+
+### JavaScript 
+
