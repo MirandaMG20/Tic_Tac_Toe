@@ -50,7 +50,7 @@ h1 {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Layout of the boxes in the board */
+/* Layout of the boxes on the board */
 .board>div {
     width: 33.3333%;
     height: 33.3333%;
