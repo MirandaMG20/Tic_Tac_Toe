@@ -38,3 +38,23 @@ This is a Tic-Tac-Toe game using HTML, CSS, and JavaScript. It allows two player
 
 ### JavaScript 
 
+static [mdn web docs]https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
+
+Array:length [mdn web docs]https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length 
+
+JSON.stringify() [w3schools.com]https://www.w3schools.com/js/js_json_stringify.asp 
+
+JSON.parse() [mdn web docs]https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse 
+
+.getItem [w3schools.com]https://www.w3schools.com/jsref/met_storage_getitem.asp 
+
+.forEach [geeksforgeeks.org]https://www.geeksforgeeks.org/javascript-array-foreach-method/ 
+
+.target event property [w3schools.com]https://www.w3schools.com/jsref/event_target.asp 
+
+Conditional (ternary) operator [mdn web docs]https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator
+
+Logical NOT (!) [mdn web docs]https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT 
+
+
+

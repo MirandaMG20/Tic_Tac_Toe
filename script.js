@@ -16,9 +16,9 @@ class TicTacToe {
     static players = document.querySelectorAll(".players>div"); // selects all the div children of the class players
 
     // Used to store the game instances/occurrence 
-    static games = [];  // empty array and assigns it to the games static property
+    static games = []; 
 
-    // Used to keep track of the current player during the game
+    // Keeps track of the current player during the game
     static currentPlayer; // Equals to null
 
     // Returns most recent game instance 
@@ -29,7 +29,7 @@ class TicTacToe {
     // Method that saves the game state in the local browser storage
     static saveGame() {
         TicTacToe.currentGame().boxClasses = TicTacToe.getBoxClasses(); // saves the current game state by storing the box classes
-        // JSON.stringify() to convert the game object into a JSON string before saving it 
+        // JSON.stringify to convert the game object into a JSON string before saving it 
         localStorage.setItem("TicTacToe-game" + TicTacToe.games.length, JSON.stringify(TicTacToe.currentGame()));
     }
 
@@ -101,24 +101,24 @@ class TicTacToe {
 
     // Sets the class names of the boxes based on the game status 
     static setBoxClasses(reset) {
-        TicTacToe.currentGame().boxClasses.forEach((className, i) => {
-            // If reset is true, it clears the class names : otherwise, it assigns the saved class names
-            TicTacToe.boxes[i].className = reset ? "" : className; // Conditional operator assigns a value to a variable based on a condition. Example: (z < 18) ? x : y
+        TicTacToe.currentGame().boxClasses.forEach((className, i) => { // goes over each box class name in the boxClasses array of the current game
+            // If reset is true ? it clears the class names : otherwise, it assigns the saved class names from the boxClasses array
+            TicTacToe.boxes[i].className = reset ? "" : className; // Conditional operator assigns a value to a variable based on a condition. Example: condition ? exprIfTrue : exprIfFalse 
         });
     }
 
     // Changes the current player and updates the active player
     static changePlayer(player) {
-        document.querySelector(".active").className = "";
+        document.querySelector(".active").className = ""; // selects the element with the class "active" and clears the class name, removes the "active" class from the previous player
         if (player) {
             TicTacToe.currentPlayer = player; // if player is provided, it sets currentPlayer to that player
         } else {
-            TicTacToe.currentGame().turn = TicTacToe.currentPlayer != TicTacToe.players[0] ? 0 : 1; 
-            TicTacToe.currentPlayer = TicTacToe.players[TicTacToe.currentGame().turn];
+            TicTacToe.currentGame().turn = TicTacToe.currentPlayer != TicTacToe.players[0] ? 0 : 1; // checks if the current player is not (!) equal to the 1st player in the players array, if so, it sets the turn to 0 :  otherwise, set to 1
+            TicTacToe.currentPlayer = TicTacToe.players[TicTacToe.currentGame().turn]; // assigns the right player from the players array to the currentPlayer var, sets the current player to the next player based on the turn 
         }
 
-        TicTacToe.currentPlayer.className = "active";
-        TicTacToe.saveGame();
+        TicTacToe.currentPlayer.className = "active"; // adds the "active" class to the element that is the current player, shows the player is active
+        TicTacToe.saveGame(); // saves the current game state
     }
 
     // Evaluates the game state to check for a winner or a draw
@@ -169,6 +169,7 @@ class TicTacToe {
         TicTacToe.saveGame(); // saves the game 
     }
 }
+
 
 // It stores the round number, turn, and box classes for a game.
 class Game {
