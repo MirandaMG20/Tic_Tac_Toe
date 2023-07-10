@@ -23,7 +23,7 @@ class TicTacToe {
 
     // Returns most recent game instance 
     static currentGame() {
-        return TicTacToe.games[TicTacToe.games.length - 1];
+        return TicTacToe.games[TicTacToe.games.length - 1]; // gives the number of game stored, calculates the index of the last game, gets and returns the last game at the actual index
     }
 
     // Method that saves the game state in the local browser storage
@@ -82,21 +82,21 @@ class TicTacToe {
 
     // Deletes all saved games from the local storage 
     static deleteGames() {
-        TicTacToe.games = []; // resets the games array
+        TicTacToe.games = []; // resets the games array, assigning an empty array removes all game stored
         let i = 1;
-        while (localStorage.getItem("TicTacToe-game" + i)) {
-            localStorage.removeItem("TicTacToe-game" + i);
-            i++;
+        while (localStorage.getItem("TicTacToe-game" + i)) { // loop checks if there is a game saved, if there is a game, it continues
+            localStorage.removeItem("TicTacToe-game" + i); // removes the saved game from the local storage
+            i++; // increase the value by 1 to move to the next game or round 
         }
     }
 
     // Gets the class name of the boxes and returns them as an array
     static getBoxClasses() {
-        const boxClasses = [];
-        TicTacToe.boxes.forEach((box) => {
-            boxClasses.push(box.className);
+        const boxClasses = []; // empty array named to store the class names
+        TicTacToe.boxes.forEach((box) => { // forEach is to go over each box in the boxes array
+            boxClasses.push(box.className); // gets each className of each box and it gets push to the boxClasses array
         });
-        return boxClasses;
+        return boxClasses; // after going through all the box, returns to boxClasses array with the class names of the boxes
     }
 
     // Sets the class names of the boxes based on the game status 
@@ -144,10 +144,12 @@ class TicTacToe {
         }
     }
 
+    // Draw method 
     static winner(draw) {
-        const message = draw ? "It's a Draw!" : TicTacToe.currentPlayer.id + " Wins!";
+        const message = draw ? "It's a Draw!" : TicTacToe.currentPlayer.id + " Wins!"; // if draw is true, draw massage is display, otherwise, display message with currentPlayer.id wins
         const div = document.createElement("div"); // creates a div in the document(the void)
         div.className = "winner"; // assigning multiple classes to the div
+
         div.innerHTML = '<div><span>' + message + '</span>'
             + (TicTacToe.round.innerText >= 3 ? '<button onclick="TicTacToe.newGame()">New Game</button>' : "") // show the button in the game at the end of the 3rd round
             + '</div>';
@@ -156,9 +158,11 @@ class TicTacToe {
                 TicTacToe.nextRound(); // calls nextRound method
             }, 3000); // Message display for 3s
         }
+
         document.querySelector("body").appendChild(div); // append div as a child of the body
     }
 
+    // Click event on the box elements
     static selectBox(clickEvent) {
         const selectedBox = clickEvent.target; // the click event on the box elements, equals the current box selected
         if (selectedBox.className) {  // if selected box already has a class, return 
@@ -180,8 +184,7 @@ class Game {
     }
 }
 
-// Adds a click event listener to each box element on the game board 
-TicTacToe.boxes.forEach((box) => {
+TicTacToe.boxes.forEach((box) => { // adds a click event listener to each box element on the game board 
     box.addEventListener("click", TicTacToe.selectBox); // When a box is clicked, it calls the selectBox method to handle the event
 });
 
