@@ -27,6 +27,7 @@ This is a Tic-Tac-Toe game using HTML, CSS, and JavaScript. It allows two player
 7. At the end of the third round, the New Game button can be clicked to restart the game.
 
 
+
 ### CSS 
 
 :nth-child [w3schools.com]https://www.w3schools.com/cssref/sel_nth-child.php

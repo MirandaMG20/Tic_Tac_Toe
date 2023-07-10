@@ -4,24 +4,24 @@ class TicTacToe {
     // Selecting DOM elements and assigning them to static properties
 
     // It allows access and manipulate the game board element 
-    static board = document.querySelector(".board"); // selects the class board and assigns it to the method board 
+    static board = document.querySelector(".board"); 
 
     // It represents the individual cells or boxes of the game board.
     static boxes = document.querySelectorAll(".board>div"); // selects all the div children of the class board: 9 boxes [div, div, div, div, div, div, div, div, div]: 0 to 8 Index 
 
-    // Responsible for displaying the current round number in the game
-    static round = document.querySelector(".round>span"); // selects the class round and assigns it to round
+    // Display the current round number in the game
+    static round = document.querySelector(".round>span"); 
 
     // Represents the player elements in the game, "X" and "O"
-    static players = document.querySelectorAll(".players>div"); // selects all the div children of the class players
+    static players = document.querySelectorAll(".players>div"); 
 
-    // Used to store the game instances/occurrence 
+    // Store the game instances/occurrence 
     static games = []; 
 
     // Keeps track of the current player during the game
     static currentPlayer; // Equals to null
 
-    // Returns most recent game instance 
+    // Returns recent game state
     static currentGame() {
         return TicTacToe.games[TicTacToe.games.length - 1]; // gives the number of game stored, calculates the index of the last game, gets and returns the last game at the actual index
     }
@@ -43,7 +43,7 @@ class TicTacToe {
 
     // Starts a new game
     static newGame() {
-        TicTacToe.deleteGames(); // deletes(clear the board) existing games
+        TicTacToe.deleteGames(); // deletes(clear the board) previous games
         TicTacToe.nextRound(); // starts a new round and reset the game
     }
 
